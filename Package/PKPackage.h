@@ -1,24 +1,29 @@
 #pragma once
 
 #include <cstdint>
+#include <vector>
+
+#include "CMChunk.h"
+#include <string>
 
 class PKPackage
 {
 public:
-    uint32_t id;        // mask with 0x00FFFFFF
-    uint16_t hasChildren;
-    uint16_t version;
-    uint64_t length;
+    std::vector<CMChunk> rootChunks; // Root chunks of the package
 
 public:
     PKPackage() = default;
 
-    PKPackage(uint32_t _id, uint16_t _hasChildren, uint16_t _version, uint64_t _length)
-        : id(_id), hasChildren(_hasChildren), version(_version), length(_length)
+    PKPackage()
     {}
 
-    uint32_t GetMaskedID() const
+    uint32_t GetPackageSize() const
     {
-        return id & 0x00FFFFFF;
+        return sizeof(PKPackage);
+    }
+
+    void ReadFromFile(const std::string& filePath)
+    {
+        // Implement reading a package from a file.
     }
 };
