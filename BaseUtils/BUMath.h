@@ -29,6 +29,11 @@ public:
         y = _vector.y;
     }
 
+    float Length() const
+    {
+        return sqrtf(x*x + y*y);
+    }
+
     BUVector2& operator+=(const BUVector2& rhs)
     {
         x += rhs.x;
@@ -135,6 +140,16 @@ public:
         z = _vector.z;
     }
 
+    float Length() const
+    {
+        return sqrtf(x*x + y*y + z*z);
+    }
+
+    float LengthSquared() const
+    {
+        return x * x + y * y + z * z;
+    }
+
     BUVector3& operator+=(const BUVector3& rhs)
     {
         x += rhs.x;
@@ -204,6 +219,16 @@ public:
         return !(*this == rhs);
     }
 
+    float Dot(const BUVector3& rhs) const
+    {
+        return x * rhs.x + y * rhs.y + z * rhs.z;
+    }
+
+    static float Dot(const BUVector3& a, const BUVector3& b)
+    {
+        return a.Dot(b);
+    }
+
     void Min(const BUVector3& rhs)
     {
         x = std::min(x, rhs.x);
@@ -253,6 +278,11 @@ public:
         y = _vector.y;
         z = _vector.z;
         w = _vector.w;
+    }
+
+    float Length() const
+    {
+        return sqrtf(x*x + y*y + z*z + w*w);
     }
 
     BUVector4& operator+=(const BUVector4& rhs)
