@@ -1,6 +1,8 @@
 #pragma once
 #include <cstdint>
 
+#include "../BaseUtils/BUBox.h"
+
 class GRClipTreeNode
 {
     BUBox mBBox;
@@ -39,15 +41,15 @@ class GRClippableRCMask : public GRClippable
 {
 public:
     uint32_t muiRenderCamMask;
-}
+};
 
 class GRClippableObj : public GRClippableRCMask
 {
 public:
 
-}
+};
 
 class GRClippableObjSphere : public GRClippableObj
 {
 
-}
+};
