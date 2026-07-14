@@ -16,6 +16,12 @@ public:
     uint32_t uiPostLoadDataCRC;
     char     zName[64];
 
+    CMChunkResourceHeader(const CMChunk& chunk)
+        : CMChunk(chunk)
+    {
+        Parse();
+    }
+
     CMResourceType GetResourceType() const
     {
         return static_cast<CMResourceType>(uiResourceType);
@@ -64,5 +70,29 @@ public:
     std::string GetName() const
     {
         return std::string(zName, strnlen(zName, sizeof(zName)));
+    }
+
+private:
+    void Parse()
+    {
+        size_t offset = 0;
+        uiCRC             = Read<uint32_t>(offset);
+        uiResourceType    = Read<uint32_t>(offset);
+        uiLanguageMask    = Read<uint32_t>(offset);
+        uiQualityLevel    = Read<uint32_t>(offset);
+
+        if (lengthFieldSize == 4)
+        {
+            uiDataOffset = static_cast<uint64_t>(Read<uint32_t>(offset));
+        }
+        else
+        {
+            uiDataOffset = Read<uint64_t>(offset);
+        }
+
+        uiPostLoadDataCRC = Read<uint32_t>(offset);
+
+        std::memcpy(zName, data.data() + offset, sizeof(zName));
+        offset += sizeof(zName);
     }
 };

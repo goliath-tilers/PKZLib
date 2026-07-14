@@ -18,7 +18,7 @@ public:
     };
 
     uint32_t uiMaterialCount;
-    uint8_t pui8MaterialIdxList;
+    // uint8_t pui8MaterialIdxList;
     uint32_t pVertexBuffer;
     uint32_t uiVertexStride;
     int32_t iVertexFormat;
@@ -102,33 +102,6 @@ public:
     }
 
 private:
-    template<typename T>
-    T Read(size_t& offset)
-    {
-        if (offset + sizeof(T) > data.size())
-        {
-            std::cout
-                << "Read failed\n"
-                << "Offset: 0x" << std::hex << offset << "\n"
-                << "Need: 0x" << sizeof(T) << " bytes\n"
-                << "Data size: 0x" << data.size() << "\n";
-
-            throw std::runtime_error("RZGeomPrim data out of bounds");
-        }
-
-        T value;
-        std::memcpy(&value, data.data() + offset, sizeof(T));
-        offset += sizeof(T);
-
-        // File is big-endian, system is little-endian
-        if (isLittleEndian == false)
-        {
-            ByteSwap(&value, sizeof(T));
-        }
-
-        return value;
-    }
-
     void Parse()
     {
         size_t offset = 0;
